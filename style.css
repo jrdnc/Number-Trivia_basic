@@ -1,0 +1,35 @@
+body {
+	display: grid;
+	grid-template-columns: 5% repeat(4, auto) 5%;
+	/* grid-template-columns: repeat(4, auto); */
+	grid-template-rows: repeat(6, 1fr);
+	justify-content: space-between;
+	align-items: center;
+	text-align: center;
+}
+
+p {
+	grid-column: span 6;
+}
+
+.category {
+	grid-column: 2/span 4;
+	grid-row-start: 3;
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-template-rows: auto;
+}
+
+.cats {
+	grid-row: 1/2;
+
+}
+
+.ans {
+	grid-row-start: 4;
+}
+
+.btn {
+	grid-row-start: 5;
+	grid-column: 1/span 6;
+}
