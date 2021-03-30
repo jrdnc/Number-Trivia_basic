@@ -29,7 +29,7 @@ p {
 	grid-row-start: 4;
 }
 
-.btn {
+.enter {
 	grid-row-start: 5;
 	grid-column: 1/span 6;
 }
