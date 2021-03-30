@@ -33,3 +33,9 @@ p {
 	grid-row-start: 5;
 	grid-column: 1/span 6;
 }
+
+/* when finished, this won't be here, it will be added using JS*/
+/* .warning {
+	font-size: .5em;
+	color: red;
+} */

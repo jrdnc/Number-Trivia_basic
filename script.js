@@ -14,8 +14,9 @@ function selectCategory(e) {
 
 function displayFact(e) {
   console.log("enter");
-  // based on current selected category, display number fact (using Numbers API)
+  // based on current selected category and input given from user, display number fact (using Numbers API)
   // if no category selected, ask user to select a category first
+    // insert { <p class="warning">Please select a category!</p> } underneath the enter button in the HTML
 }
 
 categories.forEach(cat => cat.addEventListener('click', selectCategory)); // add event listener to each category button
