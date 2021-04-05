@@ -3,21 +3,30 @@ const enterButton = document.querySelector('div.enter button');
 let selectedCategory = null;
 
 function selectCategory(e) {
-  // store current button as selected category
-  selectedCategory = e.target.innerText.toLowerCase();
-  console.log(selectedCategory);
-  // console.log(e);
-  console.log(e.target);
-  //ask for user input based on category
-  // let input;
   const element = document.querySelector('div.input');
   const enter = document.querySelector('div.enter');
-  element.toggleAttribute('hidden');
-  if (element.hasAttribute('hidden') === false) {
-    enter.style.gridRowStart = '5';
+  // store current button as selected category
+  let temp = e.target.innerText.toLowerCase();
+  console.log(temp);
+  console.log(selectedCategory);
+  // if same category || diff category and hidden, then toggle hidden
+  if ((temp === selectedCategory) || (temp != selectedCategory && element.hasAttribute('hidden'))) {
+    console.log("Hi!");
+    element.toggleAttribute('hidden');
+  }
+  selectedCategory = temp;
+  console.log(selectedCategory);
+  console.log(e.target);
+  console.log(element.hasAttribute('hidden'));
+  //ask for user input based on category
+  // let input;
+
+  // shift enter button based on whether user input is showing or not
+  if (element.hasAttribute('hidden') === true) {
+    enter.style.gridRowStart = '4';
   }
   else {
-    enter.style.gridRowStart = '4';
+    enter.style.gridRowStart = '5';
   }
 
   // create new div element to be inserted
