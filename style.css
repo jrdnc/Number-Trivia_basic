@@ -29,8 +29,15 @@ p {
 	grid-row-start: 4;
 }
 
+.input {
+		grid-row-start: 4;
+		grid-column: 1/span 6;
+}
+.rand {
+	font-size: .42em;
+}
 .enter {
-	grid-row-start: 5;
+	grid-row-start: 4;
 	grid-column: 1/span 6;
 }
 
