@@ -34,7 +34,10 @@ p {
 		grid-column: 1/span 6;
 }
 .rand {
-	font-size: .42em;
+	font-size: .5em;
+}
+input[type=checkbox] {
+	transform: scale(0.5);
 }
 .enter {
 	grid-row-start: 4;
