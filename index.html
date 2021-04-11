@@ -23,14 +23,20 @@
 			<button>Year</button>
 		</div>
 	</div>
-	<div class="input" hidden>
-		<input class="user" type="text">
-		<div>
-			<input class="rand" type="checkbox">Random</input>
+	<form onsubmit="return false;">
+		<div class="input" hidden>
+			<input class="user" type="text">
+			<div>
+				<input class="rand" type="checkbox">Random</input>
+			</div>
 		</div>
-	</div>
-	<div class="enter">
-		<button>Show Me the Numbers!</button>
+		<div class="enter">
+			<button type="submit">Show Me the Numbers!</button>
+		</div>
+	</form>
+	<div class="ans" hidden>
+		<script class="temp" scr="http://numbersapi.com/111?json?text"></script>
+		<!-- <p class="temp">djalklsjdadof</p> -->
 	</div>
 	<script src="script.js"></script>
 </body>
