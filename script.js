@@ -51,9 +51,10 @@ function displayFact(e) {
   document.querySelector(".ans").toggleAttribute('hidden');
   let fact = document.createElement('script');
   // fact.setAttribute('src', 'http://numbersapi.com/111?json?text');
+ 
   fetch('http://numbersapi.com/111?json')
-    .then(response => console.log(response.json()))
-    .then(json => console.log(json));
+    .then(response => response.json())
+    .then(data => console.log(data.text));
   // document.querySelector(".ans").appendChild(fact);
   // console.log(fact);
   // console.log(text);
