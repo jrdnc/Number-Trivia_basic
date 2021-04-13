@@ -43,21 +43,24 @@ function selectCategory(e) {
   // deboss button
 }
 
-function displayFact(e) {
+// grab fact from numbers API
+async function fetchFact(num = 111) {
+  // must 'await' to allow the fetch to get us the info we need
+  let text = await fetch(`http://numbersapi.com/${num}?json`)
+    .then(response => response.json())
+    .then(data => {return data.text});
+  return text;
+}
+
+// gets appropriate fact and displays on screen
+async function displayFact(e) {
   let number = document.querySelector(".user").value;
   console.log(number);
   console.log(selectedCategory);
-  // console.log(document.querySelector(".ans"));
   document.querySelector(".ans").toggleAttribute('hidden');
-  let fact = document.createElement('script');
-  // fact.setAttribute('src', 'http://numbersapi.com/111?json?text');
- 
-  fetch('http://numbersapi.com/111?json')
-    .then(response => response.json())
-    .then(data => console.log(data.text));
-  // document.querySelector(".ans").appendChild(fact);
-  // console.log(fact);
-  // console.log(text);
+  // must 'await' to allow for response from API before saving/using this info
+  let fact = await fetchFact(number);
+  console.log("fact: " + fact);
 
   // based on current selected category and input given from user, display number fact (using Numbers API)
   // if no category selected, ask user to select a category first
