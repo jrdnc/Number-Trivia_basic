@@ -52,19 +52,22 @@ async function fetchFact(num = 111) {
   return text;
 }
 
-// gets appropriate fact and displays on screen
+// gets appropriate fact from Numbers API based on user input and displays on screen
 async function displayFact(e) {
   let number = document.querySelector(".user").value;
   console.log(number);
   console.log(selectedCategory);
-  document.querySelector(".ans").toggleAttribute('hidden');
-  // must 'await' to allow for response from API before saving/using this info
-  let fact = await fetchFact(number);
-  console.log("fact: " + fact);
-
-  // based on current selected category and input given from user, display number fact (using Numbers API)
   // if no category selected, ask user to select a category first
-    // insert { <p class="warning">Please select a category!</p> } underneath the enter button in the HTML
+  if (selectedCategory === null) {
+    document.querySelector(".warning").toggleAttribute('hidden');
+  }
+  else {
+    document.querySelector(".ans").toggleAttribute('hidden');
+    // if warning unhidden, rehide it
+    // must 'await' to allow for response from API before saving/using this info
+    let fact = await fetchFact(number);
+    console.log("fact: " + fact);
+  }
 }
 
 categories.forEach(cat => cat.addEventListener('click', selectCategory)); // add event listener to each category button

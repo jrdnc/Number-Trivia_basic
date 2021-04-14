@@ -36,7 +36,7 @@ form {
 	grid-column: 1/span 6;
 	display: grid;
 	grid-template-columns: 100%;
-	grid-template-rows: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 1fr) .5fr;
 }
 form > div.user {
 	/* grid-row-start: 2; */
