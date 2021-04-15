@@ -2,7 +2,7 @@ const categories = document.querySelectorAll('div.cats button');
 const enterButton = document.querySelector('div.enter button');
 let selectedCategory = null;
 
-function selectCategory(e) {
+function pickCategory(e) {
   const element = document.querySelector('div.input');
   const enter = document.querySelector('div.enter');
 
@@ -55,14 +55,17 @@ async function fetchFact(num = 111) {
 // gets appropriate fact from Numbers API based on user input and displays on screen
 async function displayFact(e) {
   let number = document.querySelector(".user").value;
-  console.log(number);
-  console.log(selectedCategory);
-  // if no category selected, ask user to select a category first
-  if (selectedCategory === null) {
-    document.querySelector(".warning").toggleAttribute('hidden');
+  // if no category and/or number provided, ask user to give input first
+  if (number === undefined || selectedCategory === null) {
+    if (number === undefined) {
+      document.querySelector(".num-warning").removeAttribute('hidden');
+    }
+    if (selectedCategory === null) {
+      document.querySelector(".cat-warning").removeAttribute('hidden');
+    }
   }
   else {
-    document.querySelector(".ans").toggleAttribute('hidden');
+    document.querySelector(".ans").setAttribute('hidden');
     // if warning unhidden, rehide it
     // must 'await' to allow for response from API before saving/using this info
     let fact = await fetchFact(number);
@@ -70,5 +73,5 @@ async function displayFact(e) {
   }
 }
 
-categories.forEach(cat => cat.addEventListener('click', selectCategory)); // add event listener to each category button
+categories.forEach(cat => cat.addEventListener('click', pickCategory)); // add event listener to each category button
 enterButton.addEventListener('click', displayFact);

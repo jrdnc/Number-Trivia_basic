@@ -36,26 +36,14 @@ form {
 	grid-column: 1/span 6;
 	display: grid;
 	grid-template-columns: 100%;
-	grid-template-rows: repeat(2, 1fr) .5fr;
+	grid-template-rows: repeat(3, auto);
+	/* grid-template-rows: repeat(2, 1fr) .5fr; */
 }
-form > div.user {
-	/* grid-row-start: 2; */
+.warning {
+	font-size: .6em;
+	color: red;
 }
-/* .ans {
-	grid-row-start: 5;
-	grid-column: 1/span 6;
-	display: grid;
-	grid-template-columns: auto;
-	grid-template-rows: subgrid;
-} */
-
 .temp {
 	grid-row: 1/2;
 	
 }
-
-/* when finished, this won't be here, it will be added using JS*/
-/* .warning {
-	font-size: .5em;
-	color: red;
-} */
