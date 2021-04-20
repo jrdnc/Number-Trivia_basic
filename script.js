@@ -42,7 +42,7 @@ function pickCategory(e) {
 
 /************************ Retrieve/Display Info ************************/
 // grab fact from numbers API
-async function fetchFact(num = 111) {
+async function fetchFact(num) {
   // must 'await' to allow the fetch to get us the info we need
   // convert Promise to json format, then grab fact from json and return
   let text = await fetch(`http://numbersapi.com/${num}?json`)
@@ -71,7 +71,16 @@ async function displayFact(e) {
     document.querySelector(".cat-warning").setAttribute("hidden", "true");
     // must 'await' to allow for response from API before saving/using this info
     let fact = await fetchFact(number);
+    // paragraph element that contains the fact
+    let answer = document.querySelector(".fact");
     console.log("fact: " + fact);
+    console.log(answer);
+    // add fact to html in order to display on page
+    factTextNode = document.createTextNode(fact);
+    if (answer.hasChildNodes()) {
+      answer.removeChild(answer.firstChild);
+    }
+    answer.appendChild(factTextNode);
   }
 }
 
