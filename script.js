@@ -13,24 +13,16 @@ function pickCategory(e) {
   // if same category || diff category and hidden, then toggle hidden
   if ((temp === selectedCategory) || (temp != selectedCategory && element.hasAttribute("hidden"))) {
     element.toggleAttribute("hidden");
+    // when deselecting a category, make sure the "temp" variable is updated
     if (temp === selectedCategory) {
       temp = null;
     }
   }
-    selectedCategory = temp;
+  // set "selectedCategory" variable to current category slection
+  selectedCategory = temp;
   
   if (selectedCategory != null) {
     document.querySelector(".cat-warning").setAttribute("hidden", "true");
-  }
-  console.log(e.target);
-
-  // change height of enter button based on whether user input is showing or not
-  // need to make this not hard-coded later!!!
-  if (element.hasAttribute("hidden") === true) {
-    enter.style.gridRowStart = "4";
-  }
-  else {
-    enter.style.gridRowStart = "5";
   }
 
   // set placeholder text
@@ -52,6 +44,7 @@ function pickCategory(e) {
 // grab fact from numbers API
 async function fetchFact(num = 111) {
   // must 'await' to allow the fetch to get us the info we need
+  // convert Promise to json format, then grab fact from json and return
   let text = await fetch(`http://numbersapi.com/${num}?json`)
     .then(response => response.json())
     .then(data => {return data.text});
@@ -61,19 +54,17 @@ async function fetchFact(num = 111) {
 // gets appropriate fact from Numbers API based on user input and displays on screen
 async function displayFact(e) {
   let number = document.querySelector(".user").value;
-  console.log("number is: " + number);
-  console.log("selectedCategory: " + selectedCategory);
-  // if no category and/or number provided, ask user to give input first
+  // if no category and/or number provided, ask user to give appropriate input first (only one category shows at a time)
   if (number === "" || selectedCategory === null) {
-    if (number === "") {
-      document.querySelector(".num-warning").removeAttribute("hidden");
-    }
     if (selectedCategory === null) {
       document.querySelector(".cat-warning").removeAttribute("hidden");
+      document.querySelector(".num-warning").setAttribute("hidden", true);
+    }
+    else if (number === "") {
+      document.querySelector(".num-warning").removeAttribute("hidden");
     }
   }
-  else {
-    console.log("hihi");
+  else { // if user has done everthing properly, show the appropriate fact
     document.querySelector(".ans").removeAttribute("hidden");
     // if warning unhidden, rehide it
     document.querySelector(".num-warning").setAttribute("hidden", "true");
