@@ -21,6 +21,7 @@ function pickCategory(e) {
   // set "selectedCategory" variable to current category slection
   selectedCategory = temp;
   
+  // if a category is selected, then the category warning will not show
   if (selectedCategory != null) {
     document.querySelector(".cat-warning").setAttribute("hidden", "true");
   }
@@ -55,28 +56,31 @@ async function fetchFact(num) {
 async function displayFact(e) {
   let number = document.querySelector(".user").value;
   // if no category and/or number provided, ask user to give appropriate input first (only one category shows at a time)
+  let catWarn = document.querySelector(".cat-warning");
+  let numWarn = document.querySelector(".num-warning");
   if (number === "" || selectedCategory === null) {
     if (selectedCategory === null) {
-      document.querySelector(".cat-warning").removeAttribute("hidden");
-      document.querySelector(".num-warning").setAttribute("hidden", true);
+      catWarn.removeAttribute("hidden");
+      numWarn.setAttribute("hidden", true);
     }
     else if (number === "") {
-      document.querySelector(".num-warning").removeAttribute("hidden");
+      numWarn.removeAttribute("hidden");
     }
   }
   else { // if user has done everthing properly, show the appropriate fact
     document.querySelector(".ans").removeAttribute("hidden");
     // if warning unhidden, rehide it
-    document.querySelector(".num-warning").setAttribute("hidden", "true");
-    document.querySelector(".cat-warning").setAttribute("hidden", "true");
+    numWarn.setAttribute("hidden", "true");
+    catWarn.setAttribute("hidden", "true");
     // must 'await' to allow for response from API before saving/using this info
     let fact = await fetchFact(number);
+
     // paragraph element that contains the fact
     let answer = document.querySelector(".fact");
-    console.log("fact: " + fact);
-    console.log(answer);
+
     // add fact to html in order to display on page
     factTextNode = document.createTextNode(fact);
+    // get rid of old text before adding new text
     if (answer.hasChildNodes()) {
       answer.removeChild(answer.firstChild);
     }
@@ -84,5 +88,6 @@ async function displayFact(e) {
   }
 }
 
+/*************************** Event Listeners ***************************/
 categories.forEach(cat => cat.addEventListener("click", pickCategory)); // add event listener to each category button
 enterButton.addEventListener("click", displayFact);
