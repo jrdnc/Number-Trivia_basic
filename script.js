@@ -42,6 +42,45 @@ function pickCategory(e) {
 }
 
 /************************ Retrieve/Display Info ************************/
+// check if format of given input is valid
+function validInput(num) {
+  let isValid = false;
+  if (selectedCategory === "math" || selectedCategory === "trivia") {
+    isValid = !isNaN(num);
+  }
+  else if (selectedCategory === "date") { // date format is mm/dd
+    date = num.split("/");
+    console.log(date);
+    if (date.length === 2) { // if there are exactly 2 separate numbers listed in date
+      let month = Number(date[0]);
+      let day = Number(date[1]);
+      if (Number.isInteger(month) && Number.isInteger(day)) { // if numbers provided are integers (not floats)
+        if (month > 0 && month < 13) { // if first number is a month
+          if (month === 2) { // if month is feb, check for at most 29 days
+
+          }
+          else if (month === 1 || month === 3 || month === 5 || month === 7 || month === 8 || month === 10 || month === 12) { // if month is jan, mar, may, jul, aug, oct, dec, check for 31 days
+            if (day > 0 && day < 31) {
+              isValid = true;
+            }
+          }
+          else if (month === 4 || month === 6 || month === 9 || month === 11) { // if month is apr, jun, sep, nov, check for 30 days
+            if (day > 0 && day < 30) {
+              isValid = true;
+            }
+          }
+        }
+      }
+    }
+  }
+  else if (selectedCategory === "year") {
+    if (Number.isInteger(num)) {
+      isValid = true;
+    }
+  }
+  return isValid;
+}
+
 // grab fact from numbers API
 async function fetchFact(num) {
   // must 'await' to allow the fetch to get us the info we need
@@ -55,9 +94,11 @@ async function fetchFact(num) {
 // gets appropriate fact from Numbers API based on user input and displays on screen
 async function displayFact(e) {
   let number = document.querySelector(".user").value;
+
   // if no category and/or number provided, ask user to give appropriate input first (only one category shows at a time)
   let catWarn = document.querySelector(".cat-warning");
   let numWarn = document.querySelector(".num-warning");
+  let invalidWarn = document.querySelector(".invalid-warning");
   if (number === "" || selectedCategory === null) {
     if (selectedCategory === null) {
       catWarn.removeAttribute("hidden");
@@ -66,6 +107,10 @@ async function displayFact(e) {
     else if (number === "") {
       numWarn.removeAttribute("hidden");
     }
+  }
+  else if (!validInput(number)) { // check if 'number' has appropriate format
+    // show invalid input warning
+    console.log(invalidWarn);
   }
   else { // if user has done everthing properly, show the appropriate fact
     document.querySelector(".ans").removeAttribute("hidden");
