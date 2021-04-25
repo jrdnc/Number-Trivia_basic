@@ -17,7 +17,8 @@ body {
 	grid-column: 2/span 4;
 	grid-row-start: 2;
 	display: grid;
-	grid-template-columns: repeat(4, 20vw);
+	/* grid-template-columns: repeat(4, 20vw); */
+	grid-template-columns: auto;
 	grid-template-rows: auto;
 }
 
