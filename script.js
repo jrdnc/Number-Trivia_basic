@@ -76,7 +76,7 @@ function validInput(num) {
     }
   }
   else if (selectedCategory === "year") {
-    if (Number.isInteger(num)) {
+    if (Number.isInteger(Number(num))) {
       isValid = true;
     }
   }
@@ -84,13 +84,42 @@ function validInput(num) {
 }
 
 // grab fact from numbers API
-async function fetchFact(num) {
+async function fetchFact(num, randomize) {
   // must 'await' to allow the fetch to get us the info we need
   // convert Promise to json format, then grab fact from json and return
-  let text = await fetch(`http://numbersapi.com/${num}?json`)
-    .then(response => response.json())
-    .then(data => {return data.text});
+  let text = "";
+  if (randomize) {
+    text = await fetch(`http://numbersapi.com/random/${selectedCategory}?json`)
+      .then(response => response.json())
+      .then(data => {return data.text});
+    console.log(selectedCategory);
+  }
+  else {
+    switch (selectedCategory) {
+      case "math":
+      case "year":
+        text = await fetch(`http://numbersapi.com/${num}/${selectedCategory}?json`)
+          .then(response => response.json())
+          .then(data => {return data.text});
+        break;
+      case "trivia":
+        text = await fetch(`http://numbersapi.com/${num}?json`)
+          .then(response => response.json())
+          .then(data => {return data.text});
+        break;
+      case "date":
+        let date = num.split("/");
+        text = await fetch(`http://numbersapi.com/${date[0]}/${date[1]}/${selectedCategory}?json`)
+          .then(response => response.json())
+          .then(data => {return data.text});
+        break;
+    }
+    text = await fetch(`http://numbersapi.com/${num}?json`)
+      .then(response => response.json())
+      .then(data => {return data.text});
+  }
   return text;
+  
 }
 
 // checks for user input warnings
@@ -99,6 +128,8 @@ function checkWarnings(currentCategory, number = null, rand = false) {
   let catWarn = document.querySelector(".cat-warning");
   let numWarn = document.querySelector(".num-warning");
   let invalidWarn = document.querySelector(".invalid-warning");
+  console.log(currentCategory);
+  console.log(number);
   if (currentCategory != null && number === null) {
     catWarn.setAttribute("hidden", "true");
     return false;
@@ -131,18 +162,20 @@ function checkWarnings(currentCategory, number = null, rand = false) {
 async function displayFact(e) {
   let number = document.querySelector(".user").value;
   let noWarnings = checkWarnings(selectedCategory, number, randomButton.checked);
+  let randomize = false;
   let fact = "";
   let answer = document.querySelector(".fact");
 
   if (noWarnings) { // if user has done everthing properly, show the appropriate fact
     if (randomButton.checked === true) { // category has to be selected in order for this to be true
       // retrieve fact
-      fact = "get random fact";
+      // fact = "get random fact";
+      randomize = true;
     }
-    else {
+    // else {
       // must 'await' to allow for response from API before saving/using this info
-      fact = await fetchFact(number);
-    }
+      fact = await fetchFact(number, randomize);
+    // }
     console.log(fact);
     // add fact to html in order to display on page
     factTextNode = document.createTextNode(fact);
