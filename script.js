@@ -1,5 +1,6 @@
 const categories = document.querySelectorAll("div.cats button");
 const enterButton = document.querySelector("div.enter button");
+const randomButton = document.querySelector(".rand");
 let selectedCategory = null;
 
 /************************ Request User Input ************************/
@@ -23,7 +24,8 @@ function pickCategory(e) {
   
   // if a category is selected, then the category warning will not show
   if (selectedCategory != null) {
-    document.querySelector(".cat-warning").setAttribute("hidden", "true");
+    checkWarnings(selectedCategory);
+    // document.querySelector(".cat-warning").setAttribute("hidden", "true");
   }
 
   // set placeholder text
@@ -91,38 +93,57 @@ async function fetchFact(num) {
   return text;
 }
 
-// gets appropriate fact from Numbers API based on user input and displays on screen
-async function displayFact(e) {
-  let number = document.querySelector(".user").value;
-
-  // if no category and/or number provided, ask user to give appropriate input first (only one category shows at a time)
+// checks for user input warnings
+// if no category and/or number provided, ask user to give appropriate input first (only one category shows at a time)
+function checkWarnings(currentCategory, number = null, rand = false) {
   let catWarn = document.querySelector(".cat-warning");
   let numWarn = document.querySelector(".num-warning");
   let invalidWarn = document.querySelector(".invalid-warning");
-  if (number === "" || selectedCategory === null) {
-    if (selectedCategory === null) {
+  if (currentCategory != null && number === null) {
+    catWarn.setAttribute("hidden", "true");
+    return false;
+  }
+  else if ((currentCategory === null || number === "") && rand != true) {
+    if (currentCategory === null) {
       catWarn.removeAttribute("hidden");
       numWarn.setAttribute("hidden", true);
     }
     else if (number === "") {
       numWarn.removeAttribute("hidden");
     }
+    return false;
   }
   else if (!validInput(number)) { // check if 'number' has appropriate format
     // show invalid input warning
     console.log(invalidWarn);
+    return false;
   }
-  else { // if user has done everthing properly, show the appropriate fact
+  else {
     document.querySelector(".ans").removeAttribute("hidden");
     // if warning unhidden, rehide it
     numWarn.setAttribute("hidden", "true");
     catWarn.setAttribute("hidden", "true");
-    // must 'await' to allow for response from API before saving/using this info
-    let fact = await fetchFact(number);
+    return true;
+  }
+}
 
-    // paragraph element that contains the fact
-    let answer = document.querySelector(".fact");
+// gets appropriate fact from Numbers API based on user input and displays on screen
+async function displayFact(e) {
+  let number = document.querySelector(".user").value;
+  let noWarnings = checkWarnings(selectedCategory, number, randomButton.checked);
+  let fact = "";
+  let answer = document.querySelector(".fact");
 
+  if (noWarnings) { // if user has done everthing properly, show the appropriate fact
+    if (randomButton.checked === true) { // category has to be selected in order for this to be true
+      // retrieve fact
+      fact = "get random fact";
+    }
+    else {
+      // must 'await' to allow for response from API before saving/using this info
+      fact = await fetchFact(number);
+    }
+    console.log(fact);
     // add fact to html in order to display on page
     factTextNode = document.createTextNode(fact);
     // get rid of old text before adding new text
@@ -131,8 +152,26 @@ async function displayFact(e) {
     }
     answer.appendChild(factTextNode);
   }
+  else {
+    // clear user input bar
+    document.querySelector(".user").value = "";
+  }
+}
+
+// disable textbox if random option is checked
+function disableTextbox() {
+  let textbox = document.querySelector("input.user");
+  if (randomButton.checked) {
+    textbox.disabled = true;
+    // make background color grey
+  }
+  else {
+    textbox.disabled = false;
+    // remove background color
+  }
 }
 
 /*************************** Event Listeners ***************************/
 categories.forEach(cat => cat.addEventListener("click", pickCategory)); // add event listener to each category button
 enterButton.addEventListener("click", displayFact);
+randomButton.addEventListener("click", disableTextbox);

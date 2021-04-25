@@ -25,12 +25,7 @@ body {
 	grid-row: 1/2;
 
 }
-.rand {
-	font-size: .5em;
-}
-input[type=checkbox] {
-	transform: scale(0.5);
-}
+
 form {
 	grid-row-start: 3;
 	grid-column: 1/span 6;
@@ -39,13 +34,22 @@ form {
 	grid-template-rows: repeat(3, auto);
 	/* grid-template-rows: repeat(2, 1fr) .5fr; */
 }
+.rand {
+	font-size: .5em;
+}
+input[type="text"][disabled] {
+	background-color: lightgrey;
+}
+input[type="checkbox"] {
+	transform: scale(0.5);
+}
 .warning {
 	font-size: .6em;
 	color: red;
 }
-.temp {
+/* .temp {
 	grid-row: 1/2;	
-}
+} */
 
 .ans {
 	grid-row-start: 4;
