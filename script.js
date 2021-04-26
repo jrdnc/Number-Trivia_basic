@@ -4,12 +4,41 @@ const randomButton = document.querySelector(".rand");
 let selectedCategory = null;
 
 /************************ Request User Input ************************/
+
+// return true if need to deboss, else return false
+function btnDeboss(same, ishidden) {
+  if (same) {
+    return null;
+  }
+  else if (ishidden) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+// sets everything up when you select or deselect a category
 function pickCategory(e) {
   const element = document.querySelector("div.input");
-  const enter = document.querySelector("div.enter");
+  document.querySelector(".user").value = "";
 
   // store current button as selected category
   let temp = e.target.innerText.toLowerCase();
+
+  // emboss/deboss btns as needed
+  let needDeboss = btnDeboss(temp === selectedCategory, element.hasAttribute("hidden"));
+  console.log(needDeboss);
+  if (needDeboss === null) {
+    document.querySelector(`.${selectedCategory}`).classList.toggle("deboss");
+  }
+  else if (needDeboss) {
+    document.querySelector(`.${temp}`).classList.add("deboss");
+  }
+  else {
+    document.querySelector(`.${selectedCategory}`).classList.remove("deboss");
+    document.querySelector(`.${temp}`).classList.add("deboss");
+  }
 
   // if same category || diff category and hidden, then toggle hidden
   if ((temp === selectedCategory) || (temp != selectedCategory && element.hasAttribute("hidden"))) {
@@ -18,11 +47,12 @@ function pickCategory(e) {
     if (temp === selectedCategory) {
       temp = null;
     }
+    
   }
   // set "selectedCategory" variable to current category slection
   selectedCategory = temp;
   
-  // if a category is selected, then the category warning will not show
+  // if a category is not selected, then the category warning will show
   if (selectedCategory != null) {
     checkWarnings(selectedCategory);
     // document.querySelector(".cat-warning").setAttribute("hidden", "true");
@@ -38,9 +68,6 @@ function pickCategory(e) {
   else {
     element.firstElementChild.setAttribute("placeholder", "enter a number!");
   }
-    // math & trivia - enter a specifc number or randomize
-    // date - enter a date or randomize
-  // deboss button
 }
 
 /************************ Retrieve/Display Info ************************/
@@ -52,7 +79,6 @@ function validInput(num) {
   }
   else if (selectedCategory === "date") { // date format is mm/dd
     date = num.split("/");
-    console.log(date);
     if (date.length === 2) { // if there are exactly 2 separate numbers listed in date
       let month = Number(date[0]);
       let day = Number(date[1]);
@@ -92,7 +118,6 @@ async function fetchFact(num, randomize) {
     text = await fetch(`http://numbersapi.com/random/${selectedCategory}?json`)
       .then(response => response.json())
       .then(data => {return data.text});
-    console.log(selectedCategory);
   }
   else {
     switch (selectedCategory) {
@@ -128,8 +153,6 @@ function checkWarnings(currentCategory, number = null, rand = false) {
   let catWarn = document.querySelector(".cat-warning");
   let numWarn = document.querySelector(".num-warning");
   let invalidWarn = document.querySelector(".invalid-warning");
-  console.log(currentCategory);
-  console.log(number);
   if (currentCategory != null && number === null) {
     catWarn.setAttribute("hidden", "true");
     return false;
@@ -141,12 +164,19 @@ function checkWarnings(currentCategory, number = null, rand = false) {
     }
     else if (number === "") {
       numWarn.removeAttribute("hidden");
+      if (!invalidWarn.hasAttribute("hidden")) {
+        invalidWarn.setAttribute("hidden", "true");
+      }
     }
     return false;
   }
   else if (!validInput(number)) { // check if 'number' has appropriate format
     // show invalid input warning
     console.log(invalidWarn);
+    invalidWarn.removeAttribute("hidden");
+    if (!numWarn.hasAttribute("hidden")) {
+      numWarn.setAttribute("hidden", "true");
+    }
     return false;
   }
   else {
@@ -154,6 +184,7 @@ function checkWarnings(currentCategory, number = null, rand = false) {
     // if warning unhidden, rehide it
     numWarn.setAttribute("hidden", "true");
     catWarn.setAttribute("hidden", "true");
+    invalidWarn.setAttribute("hidden", "true");
     return true;
   }
 }
@@ -168,15 +199,11 @@ async function displayFact(e) {
 
   if (noWarnings) { // if user has done everthing properly, show the appropriate fact
     if (randomButton.checked === true) { // category has to be selected in order for this to be true
-      // retrieve fact
-      // fact = "get random fact";
       randomize = true;
     }
-    // else {
-      // must 'await' to allow for response from API before saving/using this info
-      fact = await fetchFact(number, randomize);
-    // }
-    console.log(fact);
+    // must 'await' to allow for response from API before saving/using this info
+    fact = await fetchFact(number, randomize);
+
     // add fact to html in order to display on page
     factTextNode = document.createTextNode(fact);
     // get rid of old text before adding new text

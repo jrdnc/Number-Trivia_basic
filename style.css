@@ -23,7 +23,10 @@ body {
 
 .cats {
 	grid-row: 1/2;
+}
 
+.cats button.deboss {
+	background-color: green;
 }
 
 form {
