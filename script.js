@@ -139,9 +139,9 @@ async function fetchFact(num, randomize) {
           .then(data => {return data.text});
         break;
     }
-    text = await fetch(`http://numbersapi.com/${num}?json`)
-      .then(response => response.json())
-      .then(data => {return data.text});
+    // text = await fetch(`http://numbersapi.com/${num}?json`)
+    //   .then(response => response.json())
+    //   .then(data => {return data.text});
   }
   return text;
   
@@ -172,7 +172,6 @@ function checkWarnings(currentCategory, number = null, rand = false) {
   }
   else if (!validInput(number)) { // check if 'number' has appropriate format
     // show invalid input warning
-    console.log(invalidWarn);
     invalidWarn.removeAttribute("hidden");
     if (!numWarn.hasAttribute("hidden")) {
       numWarn.setAttribute("hidden", "true");
