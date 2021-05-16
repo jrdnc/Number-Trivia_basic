@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
 body {
 	display: grid;
 	grid-template-columns: 10% repeat(4, 10vw) 10%;
@@ -7,6 +9,27 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	text-align: center;
+	background-color: #9CF6F6;
+}
+
+p {
+	font-family: 'Varela Round', sans-serif;
+}
+
+button {
+	background-color: #393939;
+	border-radius: 7%;
+	font-size: 1.2em;
+	font-family: 'Varela Round', sans-serif;
+	font-weight: bold;
+	color: white;
+}
+.heading{
+	font-size: 3rem;
+}
+
+.cats button {
+	padding: 5% 10%;
 }
 
 .heading {
@@ -57,4 +80,17 @@ input[type="checkbox"] {
 .ans {
 	grid-row-start: 4;
 	grid-column: 1/span 6;
+	display: grid;
+	grid-template-columns: 20% auto 20%;
+	/* background-color: purple; */
+
+}
+
+.fact {
+	/* display: grid;
+	grid-template-columns: 10% repeat(4, 10vw) 10%; */
+	grid-column: 2;
+	padding: 4%;
+	background-color: white;
+
 }

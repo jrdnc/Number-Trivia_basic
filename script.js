@@ -148,15 +148,20 @@ async function fetchFact(num, randomize) {
 }
 
 // checks for user input warnings
+// returns false if warning displayed
 // if no category and/or number provided, ask user to give appropriate input first (only one category shows at a time)
 function checkWarnings(currentCategory, number = null, rand = false) {
   let catWarn = document.querySelector(".cat-warning");
   let numWarn = document.querySelector(".num-warning");
   let invalidWarn = document.querySelector(".invalid-warning");
+  // if category selected but no number, hide cat warning
+  // this is used to remove cat warning that was previously displayed
   if (currentCategory != null && number === null) {
     catWarn.setAttribute("hidden", "true");
+    console.log("hi");
     return false;
   }
+  // if no category or number selected, show appropriate warning
   else if ((currentCategory === null || number === "") && rand != true) {
     if (currentCategory === null) {
       catWarn.removeAttribute("hidden");
@@ -168,9 +173,10 @@ function checkWarnings(currentCategory, number = null, rand = false) {
         invalidWarn.setAttribute("hidden", "true");
       }
     }
+    console.log("hello");
     return false;
   }
-  else if (!validInput(number)) { // check if 'number' has appropriate format
+  else if (!validInput(number) && rand != true) { // check if 'number' has appropriate format
     // show invalid input warning
     invalidWarn.removeAttribute("hidden");
     if (!numWarn.hasAttribute("hidden")) {
@@ -179,7 +185,8 @@ function checkWarnings(currentCategory, number = null, rand = false) {
     return false;
   }
   else {
-    document.querySelector(".ans").removeAttribute("hidden");
+    // show fact
+    document.querySelector(".fact").removeAttribute("hidden");
     // if warning unhidden, rehide it
     numWarn.setAttribute("hidden", "true");
     catWarn.setAttribute("hidden", "true");
@@ -214,6 +221,7 @@ async function displayFact(e) {
   else {
     // clear user input bar
     document.querySelector(".user").value = "";
+    document.querySelector(".fact").setAttribute("hidden", true);
   }
 }
 
