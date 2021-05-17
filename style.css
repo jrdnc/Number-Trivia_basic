@@ -67,7 +67,7 @@ form {
 	font-size: .5em;
 }
 .input .user{
-	/* margin-top: 2%; */
+	margin-top: 2%;
 }
 input[type="text"][disabled] {
 	background-color: lightgrey;
