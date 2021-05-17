@@ -28,7 +28,6 @@ function pickCategory(e) {
 
   // emboss/deboss btns as needed
   let needDeboss = btnDeboss(temp === selectedCategory, element.hasAttribute("hidden"));
-  console.log(needDeboss);
   if (needDeboss === null) {
     document.querySelector(`.${selectedCategory}`).classList.toggle("deboss");
   }
@@ -46,6 +45,7 @@ function pickCategory(e) {
     // when deselecting a category, make sure the "temp" variable is updated
     if (temp === selectedCategory) {
       temp = null;
+      document.querySelector(".rand").checked = false;
     }
     
   }

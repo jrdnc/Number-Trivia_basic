@@ -3,9 +3,7 @@
 body {
 	display: grid;
 	grid-template-columns: 10% repeat(4, 10vw) 10%;
-	/* grid-template-columns: repeat(4, auto); */
 	grid-template-rows: repeat(5, 20vh);
-	/* grid-template-rows: repeat(6, 1fr); */
 	justify-content: space-between;
 	align-items: center;
 	text-align: center;
@@ -58,13 +56,15 @@ form {
 	grid-column: 1/span 6;
 	display: grid;
 	grid-template-columns: 100%;
-	grid-template-rows: repeat(3, auto);
-	/* grid-template-rows: repeat(2, 1fr) .5fr; */
+	grid-template-rows: repeat(3, .1fr);
 }
 .rand {
 	margin-top: 1%;
 	margin-bottom: 2%;
 	font-size: .5em;
+}
+.input {
+	grid-row-start: 2;
 }
 .input .user{
 	margin-top: 2%;
@@ -76,18 +76,20 @@ input[type="checkbox"] {
 	transform: scale(1);
 }
 
+.enter {
+	grid-row-start: 4;
+}
+
 .enter button {
 	padding: 1% 2%;
 }
 
 .warning {
+	grid-row-start: 3;
 	font-size: 1em;
 	color: #CC0000;
 
 }
-/* .temp {
-	grid-row: 1/2;	
-} */
 
 .ans {
 	margin-top: 8%;
