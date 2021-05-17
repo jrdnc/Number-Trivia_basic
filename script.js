@@ -158,7 +158,6 @@ function checkWarnings(currentCategory, number = null, rand = false) {
   // this is used to remove cat warning that was previously displayed
   if (currentCategory != null && number === null) {
     catWarn.setAttribute("hidden", "true");
-    console.log("hi");
     return false;
   }
   // if no category or number selected, show appropriate warning
@@ -173,7 +172,6 @@ function checkWarnings(currentCategory, number = null, rand = false) {
         invalidWarn.setAttribute("hidden", "true");
       }
     }
-    console.log("hello");
     return false;
   }
   else if (!validInput(number) && rand != true) { // check if 'number' has appropriate format

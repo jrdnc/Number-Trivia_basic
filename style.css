@@ -9,23 +9,24 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	text-align: center;
-	background-color: #9CF6F6;
+	background-color: #4A85BC;
 }
 
-p {
+* {
 	font-family: 'Varela Round', sans-serif;
 }
 
 button {
 	background-color: #393939;
-	border-radius: 7%;
+	border-radius: 4px;
 	font-size: 1.2em;
-	font-family: 'Varela Round', sans-serif;
 	font-weight: bold;
 	color: white;
 }
 .heading{
 	font-size: 3rem;
+	font-weight: bold;
+	color: #262525;
 }
 
 .cats button {
@@ -49,7 +50,7 @@ button {
 }
 
 .cats button.deboss {
-	background-color: green;
+	background-color: #FE8F4B;
 }
 
 form {
@@ -61,34 +62,43 @@ form {
 	/* grid-template-rows: repeat(2, 1fr) .5fr; */
 }
 .rand {
+	margin-top: 1%;
+	margin-bottom: 2%;
 	font-size: .5em;
+}
+.input .user{
+	/* margin-top: 2%; */
 }
 input[type="text"][disabled] {
 	background-color: lightgrey;
 }
 input[type="checkbox"] {
-	transform: scale(0.5);
+	transform: scale(1);
 }
+
+.enter button {
+	padding: 1% 2%;
+}
+
 .warning {
-	font-size: .6em;
-	color: red;
+	font-size: 1em;
+	color: #CC0000;
+
 }
 /* .temp {
 	grid-row: 1/2;	
 } */
 
 .ans {
+	margin-top: 8%;
 	grid-row-start: 4;
 	grid-column: 1/span 6;
 	display: grid;
 	grid-template-columns: 20% auto 20%;
-	/* background-color: purple; */
 
 }
 
 .fact {
-	/* display: grid;
-	grid-template-columns: 10% repeat(4, 10vw) 10%; */
 	grid-column: 2;
 	padding: 4%;
 	background-color: white;
